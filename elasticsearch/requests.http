@@ -1,0 +1,51 @@
+### kpop-songs index 확인
+GET /kpop-songs/_mapping
+
+### 전체 문서 수
+GET /kpop-songs/_count
+
+### 장르별 곡 수 (Songs by Genre 패널 검증)
+GET /kpop-songs/_search
+{
+  "size": 0,
+  "aggs": {
+    "genres": {
+      "terms": { "field": "genre", "size": 10 }
+    }
+  }
+}
+
+### BPM 20단위 구간 분포 (BPM Distribution 패널 검증)
+GET /kpop-songs/_search
+{
+  "size": 0,
+  "aggs": {
+    "bpm_hist": {
+      "histogram": { "field": "bpm", "interval": 20 }
+    }
+  }
+}
+
+### 연도별 발매곡 수 (Songs by Release Year 패널 검증)
+GET /kpop-songs/_search
+{
+  "size": 0,
+  "aggs": {
+    "years": {
+      "date_histogram": { "field": "release_date", "calendar_interval": "year" }
+    }
+  }
+}
+
+### Dance 장르 곡 수 (Genre Filter 정상 동작 검증, Dashboard 값 269와 비교)
+GET /kpop-songs/_search
+{
+  "size": 0,
+  "query": { "terms": { "genre": ["Dance"] } }
+}
+
+### BPM 140~171 곡 수 (BPM Distribution 막대 클릭 filter 정상 동작 검증, Dashboard 값 284와 비교)
+GET /kpop-songs/_count
+{
+  "query": { "range": { "bpm": { "gte": 140, "lte": 170 } } }
+}

@@ -1,0 +1,46 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1
+  },
+  "mappings": {
+    "dynamic": "strict",
+    "properties": {
+      "song_id": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "text"
+      },
+      "artist": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "release_date": {
+        "type": "date"
+      },
+      "genre": {
+        "type": "keyword"
+      },
+      "theme_keywords": {
+        "type": "text"
+      },
+      "mood_keywords": {
+        "type": "text"
+      },
+      "situation_keywords": {
+        "type": "text"
+      },
+      "bpm": {
+        "type": "integer"
+      },
+      "popularity_score": {
+        "type": "integer"
+      }
+    }
+  }
+}
